@@ -4,7 +4,7 @@ const repoUrl =
   "https://raw.githubusercontent.com/RetireJS/retire.js/master/repository/jsrepository-v5-combined.json";
 let updatedAt = Date.now();
 let repo;
-let backdoorData = {};
+let backdoorData;
 let repoFuncs;
 
 const retire = retirechrome.retire;
@@ -15,7 +15,7 @@ let sandboxWin;
 
 const hasher = {
   sha1: function (data) {
-    return retirechrome.sha1().update(data).digest('hex');
+    return CryptoJS.SHA1(data).toString(CryptoJS.enc.Hex);
   },
 };
 
@@ -45,7 +45,7 @@ async function downloadRepo() {
   }
   const parsedRepo = JSON.parse(retire.replaceVersion(repoData));
   repo = parsedRepo.advisories;
-  backdoorData = parsedRepo.backdoored ?? retirechrome.backdoored;
+  backdoorData = parsedRepo.backdoored;
   console.log(repo);
   console.log(backdoorData);
   console.log("Done");

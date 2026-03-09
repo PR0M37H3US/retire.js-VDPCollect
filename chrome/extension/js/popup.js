@@ -1,29 +1,20 @@
 window.addEventListener(
   "load",
   () => {
-    sendMessage("enabled?", null, (response) => {
-      document.querySelector("input[type=checkbox]#enabled").checked =
-        response.enabled;
-    });
-    sendMessage("deepScanEnabled?", null, (response) => {
-      document.querySelector("input[type=checkbox]#deepEnabled").checked =
-        response.enabled;
-    });
-
     document.querySelector("input[type=checkbox]#enabled").addEventListener(
       "click",
       () => {
         chrome.action.setIcon({
           path: this.checked ? "icons/icon48.png" : "icons/icon_bw48.png",
         });
-        sendMessage("enable", this.checked, null);
+        sendMessage("enable", true, null);
       },
       false
     );
     document.querySelector("input[type=checkbox]#deepEnabled").addEventListener(
       "click",
       () => {
-        sendMessage("deepScanEnable", this.checked, null);
+        sendMessage("deepScanEnable", true, null);
       },
       false
     );

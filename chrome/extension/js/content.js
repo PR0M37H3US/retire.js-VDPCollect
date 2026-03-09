@@ -19,11 +19,36 @@ const totalResults = [];
             .map((i) => i.info)
             .join(" ")}`;
         });
+
         console.log(
           `⚠️ Loaded script with known vulnerabilities: ${
             result.url
           }\n - ${out.join("\n - ")}`
         );
+
+        // Changes by Decker for usage and extraction via playwright
+        const vulnerableResults = result.results.filter(
+          (x) => x.vulnerabilities && x.vulnerabilities.length > 0
+        );
+                
+        // Log each vulnerable component's version and its vulnerabilities
+        vulnerableResults.forEach((x) => {
+          console.log(`[*] Vulnerable Software: ${x.component} - ${x.version}`);
+          x.vulnerabilities.forEach((y) => {
+            console.log(`  [*] Vulnerability:`, y);
+          });
+      });
+
+        const vulnerabilitiesJSON = {};
+
+        vulnerableResults.forEach((x) => {
+            const key = `${x.component} - ${x.version}`;
+            vulnerabilitiesJSON[key] = x.vulnerabilities;
+        });
+
+        // Log the JSON object for verification
+        console.log(`VULN_DATA: ${JSON.stringify(vulnerabilitiesJSON, null, 2)}`);
+
       }
       sendResponse({ count: count });
     } else if (request.getDetected) {

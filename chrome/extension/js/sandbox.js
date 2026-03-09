@@ -13,9 +13,9 @@ window.addEventListener("message", function orig(evt) {
     setTimeout(function () {
       iframe.contentWindow.postMessage(evt.data, "*");
     }, 200);
-    setTimeout(function () {
+    /*setTimeout(function () {
       iframe.remove();
-    }, 10000);
+    }, 5000);*/
   } else if (evt.data.version) {
     extension.postMessage(evt.data, "*");
   }
